@@ -1,1 +1,2 @@
-# disable Lint/EmptyFile
+#!/usr/bin/env ruby
+puts "Hello!"
