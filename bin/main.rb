@@ -1,3 +1,8 @@
-#!/usr/bin/env ruby
+# rubocop:disable Style/FrozenStringLiteralComment
+# rubocop:disable Layout/LeadingCommentSpace
 
-puts 'Hello world!'
+#!/usr/bin/env ruby
+puts 'hello, world'
+
+# rubocop:enable Style/FrozenStringLiteralComment
+# rubocop:enable Layout/LeadingCommentSpace
