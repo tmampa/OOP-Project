@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 class Player
   attr_reader :name, :letter, :position
 
