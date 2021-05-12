@@ -7,7 +7,7 @@ GEM
       ast (~> 2.4.1)
     rainbow (3.0.0)
     regexp_parser (2.1.1)
-    rexml (3.2.5)
+    rexml (3.2.4)
     rubocop (1.13.0)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
@@ -25,9 +25,10 @@ GEM
 PLATFORMS
   ruby
   x64-mingw32
+  x86_64-darwin-19
 
 DEPENDENCIES
   rubocop (>= 1.0, < 2.0)
 
 BUNDLED WITH
-   2.1.4
+   2.2.16
