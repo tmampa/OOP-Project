@@ -63,3 +63,8 @@ puts "It's #{player1.name}'s turn!"
 puts 'Please select an available cell form the board (1-9)'
 
 avail_cell = gets.chomp
+
+until game_board.board.include?(avail_cell)
+  puts 'That an invalid move'
+  avail_cell = gets.chomp
+end
