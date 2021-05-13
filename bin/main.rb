@@ -1,8 +1,18 @@
 #!/usr/bin/env ruby
 class Player
+  @@player_weapons = []
+
   def initialize(name, weapon)
     @name = name
-    @weapon = weapon
+
+    until weapon[0] != '.' && !@@player_weapons.include?(weapon[0])
+      puts "Please select a different weapon besides \"#{weapon[0]}\""
+      weapon = gets.chomp
+      @weapon = weapon
+    end
+
+    @weapon = weapon[0]
+    @@player_weapons << @weapon
   end
 
   attr_reader :name, :weapon
