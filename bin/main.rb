@@ -1,25 +1,14 @@
 #!/usr/bin/env ruby
 class Player
-  attr_reader :name, :letter, :position
-
-  # rubocop:disable Style/ClassVars
-  @@player_letters = []
-  def initialize(name, letter)
+  def initialize(name, weapon)
     @name = name
-    until letter[0] != '.' && !@@player_letters.include?(letter[0])
-      puts "Please select a different weapon besides \"#{letter[0]}\""
-      letter = gets.chomp
-      @letter = letter
-    end
-    @letter = letter[0]
-    @@player_letters << @letter
+    @weapon = weapon
   end
+
+  attr_reader :name, :weapon
 end
-# rubocop:enable Style/ClassVars
 
 class Board
-  attr_reader :board
-
   def initialize
     @board = [*'1'..'9']
   end
@@ -38,24 +27,29 @@ class Board
     puts ''
   end
 end
-# rubocop:disable Lint/UselessAssignment
 
 puts 'Player 1: Enter your name'
 name = gets.chomp
+
 puts "Choose your weapon #{name}?"
-letter = gets.chomp
-player1 = Player.new(name, letter)
+weapon = gets.chomp
+
+player1 = Player.new(name, weapon)
 
 puts 'Player 2: Enter your name.'
 name = gets.chomp
+
 puts "Choose your weapon #{name}?"
-letter = gets.chomp
-player2 = Player.new(name, letter)
+weapon = gets.chomp
 
-# rubocop:enable Lint/UselessAssignment
+player2 = Player.new(name, weapon)
 
-puts "\n---------Match started--------\n"
+puts "\n--------Match started-------\n"
 
 game_board = Board.new
 game_board.display_board
-print "\n"
+
+puts "It's #{player1.name}'s turn!"
+puts 'Please select an available cell form the board (1-9)'
+
+avail_cell = gets.chomp
