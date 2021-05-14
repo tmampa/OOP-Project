@@ -10,9 +10,9 @@ class Game
     @turn = 1
     while @turn < 10
       if @turn.odd?
-        turn_sequence(@players.player1,)
+        turn_sequence(@players.player1)
       elsif @turn.even?
-        turn_sequence(@players.player2,)
+        turn_sequence(@players.player2)
       end
     end
   end
@@ -25,7 +25,7 @@ def turn_sequence(player)
     @turn += 1
     @gameboard.board_update
   else
-    puts "Please enter a number between 1 to 9 in an emmpty location\n"
+    puts "Please enter a number between 1 to 9 in an empty location\n"
   end
 end
 
