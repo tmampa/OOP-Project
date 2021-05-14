@@ -25,7 +25,7 @@ def turn_sequence(player)
     @turn += 1
     @gameboard.board_update
   else
-    puts "Please enter a number between 1 to 9 in an emmpty location\n"
+    puts "Please enter a number between 1 to 9 in an empty location\n"
   end
 end
 
