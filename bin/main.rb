@@ -10,9 +10,9 @@ class Game
     @turn = 1
     while @turn < 10
       if @turn.odd?
-        turn_sequence(@players.player1,)
+        turn_sequence(@players.player1)
       elsif @turn.even?
-        turn_sequence(@players.player2,)
+        turn_sequence(@players.player2)
       end
     end
   end
@@ -29,15 +29,33 @@ def turn_sequence(player)
   end
 end
 
+def valid_name(name)
+  name == ''
+end
+
 class Players
   attr_reader :player1, :player2
 
   def initialize
     puts 'Player 1, please enter your name'
+
     @player1 = gets.chomp
+
+    until !valid_name(@player1)
+      puts 'Player 1, please enter a valid name'
+      @player1 = gets.chomp
+    end
+
     puts "#{@player1} is X"
+
     puts 'Player 2, please enter your name'
     @player2 = gets.chomp
+
+    until !valid_name(@player2)
+      puts 'Player 2, please enter a valid name'
+      @player2 = gets.chomp
+    end
+
     puts "#{@player2} is O"
   end
 end
