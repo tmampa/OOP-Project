@@ -57,3 +57,5 @@ class Board
     @board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
 end
+
+players = Players.new
