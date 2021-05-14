@@ -45,4 +45,15 @@ class Players
 end
 
 class Board
+  attr_reader :board
+
+  def initialize
+    puts 'On your turn enter one of the following numbers to place your piece in the corresponding location:'
+    puts '0 | 1 | 2'
+    puts '---------'
+    puts '3 | 4 | 5'
+    puts '---------'
+    puts '6 | 7 | 8'
+    @board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+  end
 end
