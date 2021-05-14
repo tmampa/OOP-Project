@@ -21,7 +21,7 @@ end
 def turn_sequence(player)
   puts "#{player} please choose a position"
   @player_move = gets.chomp.to_i
-  if (1..9).include?(@player_move) && @gameboard.board[@player_move] == ' ' && @end == false
+  if (1..9).include?(@player_move) && @end == false
     @turn += 1
     @gameboard.board_update
   else
@@ -52,7 +52,7 @@ class Board
     # puts '3 | 4 | 5'
     # puts '---------'
     # puts '6 | 7 | 8'
-    @board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    @board = [' 0', ' 1', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', ' 8']
     board_update
   end
 
