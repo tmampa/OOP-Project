@@ -57,6 +57,11 @@ class Board
     @board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
 
+  def board_update(position, symbol)
+    @board[position] = symbol
+    game_board_display(@board)
+  end
+
   def game_board_display(board)
     puts "#{board[0]} | #{board[1]} | #{board[2]}"
     puts '---------'
@@ -66,4 +71,5 @@ class Board
   end
 end
 
-players = Players.new
+game = Game.new
+game.move
