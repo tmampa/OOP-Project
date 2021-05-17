@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
+$plays = 0
+
 class Game
+  attr_reader :game_on, :plays
+
   def initialize
+    @game_on = true
     @players = Players.new
   end
 
@@ -8,11 +13,13 @@ class Game
     @end = false
     @gameboard = Board.new
     @turn = 1
-    while @turn < 10
+
+    while @turn < 3
       if @turn.odd?
         turn_sequence(@players.player1)
       elsif @turn.even?
         turn_sequence(@players.player2)
+        $plays += 1
       end
     end
   end
@@ -41,7 +48,7 @@ class Players
 
     @player1 = gets.chomp
 
-    until !valid_name(@player1)
+    while valid_name(@player1)
       puts 'Player 1, please enter a valid name'
       @player1 = gets.chomp
     end
@@ -51,7 +58,7 @@ class Players
     puts 'Player 2, please enter your name'
     @player2 = gets.chomp
 
-    until !valid_name(@player2)
+    while valid_name(@player2)
       puts 'Player 2, please enter a valid name'
       @player2 = gets.chomp
     end
@@ -65,21 +72,15 @@ class Board
 
   def initialize
     puts 'On your turn enter one of the following numbers to place your piece in the corresponding location:'
-    # puts '0 | 1 | 2'
-    # puts '---------'
-    # puts '3 | 4 | 5'
-    # puts '---------'
-    # puts '6 | 7 | 8'
     @board = [' 0', ' 1', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', ' 8']
     board_update
   end
 
   def board_update
-    # @board[position] = symbol
-    game_board_display(@board)
+    display_board(@board)
   end
 
-  def game_board_display(board)
+  def display_board(board)
     puts "#{board[0]} | #{board[1]} | #{board[2]}"
     puts '---------'
     puts "#{board[3]} | #{board[4]} | #{board[5]}"
@@ -89,4 +90,21 @@ class Board
 end
 
 game = Game.new
-game.move
+
+while game.game_on
+  if $plays == 0
+    game.move
+  elsif $plays == 1
+    puts 'Wins!'
+    puts 'Please '
+    response = gets.chomp
+
+    if response == 'Y'
+      $plays += 1
+    else break
+    end
+  else
+    puts 'draw!'
+    break
+  end
+end
