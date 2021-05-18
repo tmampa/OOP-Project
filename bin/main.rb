@@ -1,72 +1,102 @@
 #!/usr/bin/env ruby
 
-class Players
-  attr_reader :players_set, :players, :plays
+# rubocop:disable Metrics/MethodLength
 
-  def initialize
-    @players = []
-    @players_set = false
-    @plays = 0
-    @board = [' 1', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', ' 8', ' 9']
+def players_info
+  puts 'Welcome to Ruby\'s Tic Tac Toe!'
+  begin
+    puts 'Enter Player 1 name: '
+    player1 = gets.chomp.capitalize
+    puts ''
+    raise StandardError, player1 if player1.empty?
+  rescue StandardError
+    puts 'Oh no!, The name should have at least 1 character.'
+    puts ''
+    retry
   end
 
-  def set_player(name, weapon)
-    if @players.length == 2
-      @players_set = true
-    else
-      @players = { 'name' => name, 'weapon' => weapon }
-    end
+  begin
+    puts 'Enter Player 2 name: '
+    player2 = gets.chomp.capitalize
+    puts ''
+    raise StandardError, player2 if player2.empty?
+  rescue StandardError
+    puts 'Oh no!, The name should have at least 1 character.'
+    puts ''
+    retry
   end
 
-  def display_board(board)
-    puts "#{board[0]} | #{board[1]} | #{board[2]}"
-    puts '---------'
-    puts "#{board[3]} | #{board[4]} | #{board[5]}"
-    puts '---------'
-    puts "#{board[6]} | #{board[7]} | #{board[8]}"
-  end
+  puts "#{player1} is X and #{player2} is O."
+  sleep 2
+  puts ''
+  puts 'It\'s game time!'
+  puts ''
+  sleep 2
+  system 'cls'
+  system 'clear'
+  [player1, player2]
+end
+players = players_info
 
-  def move
-    @plays += 1
-    display_board(@board)
-
-    if @plays.odd?
-      puts 'Player 1 please choose a position'
-      response = gets.chomp
-    else
-      puts 'Player 2 please choose a position'
-      response = gets.chomp
-    end
-  end
+board = proc do
+  puts '+---+---+---+'
+  puts '| 1 | 2 | 3 |'
+  puts '+---+---+---+'
+  puts '| 4 | 5 | 6 |'
+  puts '+---+---+---+'
+  puts '| 7 | 8 | 9 |'
+  puts '+---+---+---+'
 end
 
-class Game
-  attr_reader :on
-
-  def initialize
-    puts '@3'
-    @on = false
-    @players = Players.new
+def game_play(player, board)
+  board.call
+  puts ''
+  puts "It's #{player}'s turn!"
+  puts ''
+  begin
+    puts 'Please select an empty cell from the board: '
+    input = gets.chomp
+    puts ''
+    raise StandardError, input if input.nil? || !(input.to_i >= 1 && input.to_i < 10)
+  rescue StandardError
+    puts 'Invalid move. Please enter a number from 1-9.'
+    puts ''
+    retry
   end
-
-  def play
-    if @players.players_set
-      puts "@1 #{@players.players.length}"
-      @players.move
-    elsif @players.players.length.zero?
-      puts 'Player 1, please enter your name'
-      name = gets.chomp
-      weapon = gets.chomp
-      @players.set_player(name, weapon)
-    else
-      puts 'Player 2, please enter your name'
-      name = gets.chomp
-      weapon = gets.chomp
-      @players.set_player(name, weapon)
-    end
-  end
+  system 'cls'
+  system 'clear'
+  sleep 1
 end
 
-game = Game.new
+game_on = true
+count = 0
 
-game.play until game.on
+while game_on && count < 2
+  game_play(players[0], board)
+  game_play(players[1], board)
+
+  count += 1
+end
+
+board.call
+puts "#{players[0]} wins the game."
+puts ''
+sleep 3
+system 'cls'
+system 'clear'
+
+count = 0
+while game_on && count < 2
+  game_play(players[0], board)
+  game_play(players[1], board)
+
+  count += 1
+end
+
+board.call
+puts 'It\'s a Tie.'
+puts ''
+puts 'Game over'
+system 'clear'
+
+# rubocop:enable Metrics/MethodLength
