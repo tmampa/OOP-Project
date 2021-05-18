@@ -10,7 +10,7 @@ def players_info
     puts ''
     raise StandardError, player1 if player1.empty?
   rescue StandardError
-    puts 'Oh no!, The name should have at least 1 character.'
+    puts 'Oh no!, This can\'t be blank.'
     puts ''
     retry
   end
@@ -21,7 +21,7 @@ def players_info
     puts ''
     raise StandardError, player2 if player2.empty?
   rescue StandardError
-    puts 'Oh no!, The name should have at least 1 character.'
+    puts 'Oh no!, This can\'t be blank.'
     puts ''
     retry
   end
@@ -81,7 +81,7 @@ end
 board.call
 puts "#{players[0]} wins the game."
 puts ''
-sleep 3
+sleep 2
 system 'cls'
 system 'clear'
 
@@ -97,6 +97,8 @@ board.call
 puts 'It\'s a Tie.'
 puts ''
 puts 'Game over'
+sleep 2
+system 'cls'
 system 'clear'
 
 # rubocop:enable Metrics/MethodLength
