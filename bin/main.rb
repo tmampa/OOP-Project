@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require '../lib/draw_logic.rb '
-require '../lib/game_logic.rb '
+require './lib/draw_logic.rb'
+require './lib/game_logic.rb'
 cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # rubocop:disable Metrics/MethodLength
 
@@ -50,6 +50,7 @@ board = proc do
   puts "| #{cells[6]} | #{cells[7]} | #{cells[8]} |"
   puts '+---+---+---+'
 end
+
 def game_play(player, board)
   board.call
   puts ''
@@ -70,37 +71,46 @@ def game_play(player, board)
   sleep 1
 end
 
-game_on = true
-count = 0
+def play(players, board, cells)
+  game_on = true
 
-while game_on && count < 2
-  game_play(players[0], board)
-  game_play(players[1], board)
+  while game_on
+    game_start(players[0], board, 'X', cells)
+    logic = Logic.new(cells)
+    draw = Draw.new(cells)
 
-  count += 1
+    if logic.winner?('X')
+      puts "#{players[0]} wins the game!"
+      sleep 2
+      game_on = false
+      return
+    elsif draw.draw?
+      puts 'It\'s a Tie!'
+      puts ''
+      puts 'Game Over'
+      sleep 2
+      game_on = false
+      return
+    end
+    game_start(players[1], board, 'O', cells)
+    logic = Logic.new(cells)
+    draw = Draw.new(cells)
+
+    if logic.winner?('O')
+      puts "#{players[1]} wins the game!"
+      sleep 2
+      game_on = false
+      return
+    elsif draw.draw?
+      puts 'It\'s a Tie!'
+      puts ''
+      puts 'Game Over'
+      sleep 2
+      game_on = false
+      return
+    end
+  end
 end
 
-board.call
-puts "#{players[0]} wins the game."
-puts ''
-sleep 2
-system 'cls'
-system 'clear'
-
-count = 0
-while game_on && count < 2
-  game_play(players[0], board)
-  game_play(players[1], board)
-
-  count += 1
-end
-
-board.call
-puts 'It\'s a Tie.'
-puts ''
-puts 'Game over'
-sleep 2
-system 'cls'
-system 'clear'
-
+game_play(players, board, cells)
 # rubocop:enable Metrics/MethodLength
