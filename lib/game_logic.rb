@@ -12,4 +12,12 @@ class Logic
              [@cell[0], @cell[4], @cell[8]],
              [@cell[2], @cell[4], @cell[6]]]
   end
+
+  def winner?(player)
+    @winner = false
+    @winner = true if @wins.any? do |array|
+      array.all? { |item| item == player }
+    end
+    @winner
+  end
 end
