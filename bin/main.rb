@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+require '../lib/draw_logic.rb '
+require '../lib/game_logic.rb '
 
 # rubocop:disable Metrics/MethodLength
 
