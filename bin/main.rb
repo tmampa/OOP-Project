@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require '../lib/draw_logic.rb '
 require '../lib/game_logic.rb '
-
+cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # rubocop:disable Metrics/MethodLength
 
 def players_info
