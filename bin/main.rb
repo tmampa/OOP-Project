@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require './lib/draw_logic.rb'
-require './lib/game_logic.rb'
+require_relative '../lib/draw_logic'
+require_relative '../lib/game_logic'
 cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # rubocop:disable Metrics/MethodLength
 
@@ -96,6 +96,25 @@ def game_play(players, board, cells)
       game_on = false
       return
     end
+
+    start(players[1], board, 'O', cells)
+    logic = Logic.new(cells)
+    draw = Draw.new(cells)
+
+    if logic.winner?('O')
+      puts "#{players[1]} wins the game!"
+      sleep 2
+      game_on = false
+      return
+    elsif draw.draw?
+      puts 'It\'s a Tie!'
+      puts ''
+      puts 'Game Over'
+      sleep 2
+      game_on = false
+      return
+    end
+  end
 end
 
 game_play(players, board, cells)
