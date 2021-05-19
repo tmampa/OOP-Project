@@ -84,11 +84,15 @@ def game_play(players, board, cells)
     draw = Draw.new(cells)
 
     if logic.winner?('X')
+      board.call
+      puts ''
       puts "#{players[0]} wins the game!"
       sleep 2
       game_on = false
       return
     elsif draw.draw?
+      board.call
+      puts ''
       puts 'It\'s a Tie!'
       puts ''
       puts 'Game Over'
@@ -102,11 +106,15 @@ def game_play(players, board, cells)
     draw = Draw.new(cells)
 
     if logic.winner?('O')
+      board.call
+      puts ''
       puts "#{players[1]} wins the game!"
       sleep 2
       game_on = false
       return
     elsif draw.draw?
+      board.call
+      puts ''
       puts 'It\'s a Tie!'
       puts ''
       puts 'Game Over'
