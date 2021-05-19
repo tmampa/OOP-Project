@@ -51,31 +51,35 @@ board = proc do
   puts '+---+---+---+'
 end
 
-def game_play(player, board)
+def start(player, board, arg, records)
   board.call
   puts ''
   puts "It's #{player}'s turn!"
   puts ''
   begin
-    puts 'Please select an empty cell from the board: '
+    puts 'Please select an available cell from the board: '
     input = gets.chomp
     puts ''
-    raise StandardError, input if input.nil? || !(input.to_i >= 1 && input.to_i < 10)
+    if input.nil? || !(input.to_i >= 1 && input.to_i < 10) || !records[input.to_i - 1].is_a?(Integer)
+      raise StandardError,
+            input
+    end
   rescue StandardError
     puts 'Invalid move. Please enter a number from 1-9.'
     puts ''
     retry
   end
+  records[input.to_i - 1] = arg
   system 'cls'
   system 'clear'
   sleep 1
 end
 
-def play(players, board, cells)
+def game_play(players, board, cells)
   game_on = true
 
   while game_on
-    game_start(players[0], board, 'X', cells)
+    start(players[0], board, 'X', cells)
     logic = Logic.new(cells)
     draw = Draw.new(cells)
 
@@ -92,24 +96,6 @@ def play(players, board, cells)
       game_on = false
       return
     end
-    game_start(players[1], board, 'O', cells)
-    logic = Logic.new(cells)
-    draw = Draw.new(cells)
-
-    if logic.winner?('O')
-      puts "#{players[1]} wins the game!"
-      sleep 2
-      game_on = false
-      return
-    elsif draw.draw?
-      puts 'It\'s a Tie!'
-      puts ''
-      puts 'Game Over'
-      sleep 2
-      game_on = false
-      return
-    end
-  end
 end
 
 game_play(players, board, cells)
