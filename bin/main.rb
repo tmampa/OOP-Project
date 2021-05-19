@@ -42,14 +42,13 @@ players = players_info
 
 board = proc do
   puts '+---+---+---+'
-  puts '| 1 | 2 | 3 |'
+  puts "| #{cells[0]} | #{cells[1]} | #{cells[2]} |"
   puts '+---+---+---+'
-  puts '| 4 | 5 | 6 |'
+  puts "| #{cells[3]} | #{cells[4]} | #{cells[5]} |"
   puts '+---+---+---+'
-  puts '| 7 | 8 | 9 |'
+  puts "| #{cells[6]} | #{cells[7]} | #{cells[8]} |"
   puts '+---+---+---+'
 end
-
 def game_play(player, board)
   board.call
   puts ''
