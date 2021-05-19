@@ -38,6 +38,7 @@ def players_info
   system 'clear'
   [player1, player2]
 end
+
 players = players_info
 
 board = proc do
