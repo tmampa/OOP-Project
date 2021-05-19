@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
-
+require_relative '../lib/draw_logic'
+require_relative '../lib/game_logic'
+cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # rubocop:disable Metrics/MethodLength
 
 def players_info
@@ -36,69 +38,92 @@ def players_info
   system 'clear'
   [player1, player2]
 end
+
 players = players_info
 
 board = proc do
   puts '+---+---+---+'
-  puts '| 1 | 2 | 3 |'
+  puts "| #{cells[0]} | #{cells[1]} | #{cells[2]} |"
   puts '+---+---+---+'
-  puts '| 4 | 5 | 6 |'
+  puts "| #{cells[3]} | #{cells[4]} | #{cells[5]} |"
   puts '+---+---+---+'
-  puts '| 7 | 8 | 9 |'
+  puts "| #{cells[6]} | #{cells[7]} | #{cells[8]} |"
   puts '+---+---+---+'
 end
 
-def game_play(player, board)
+def start(player, board, arg, records)
   board.call
   puts ''
   puts "It's #{player}'s turn!"
   puts ''
   begin
-    puts 'Please select an empty cell from the board: '
+    puts 'Please select an available cell from the board: '
     input = gets.chomp
     puts ''
-    raise StandardError, input if input.nil? || !(input.to_i >= 1 && input.to_i < 10)
+    if input.nil? || !(input.to_i >= 1 && input.to_i < 10) || !records[input.to_i - 1].is_a?(Integer)
+      raise StandardError,
+            input
+    end
   rescue StandardError
     puts 'Invalid move. Please enter a number from 1-9.'
     puts ''
     retry
   end
+  records[input.to_i - 1] = arg
   system 'cls'
   system 'clear'
   sleep 1
 end
 
-game_on = true
-count = 0
+def game_play(players, board, cells)
+  game_on = true
 
-while game_on && count < 2
-  game_play(players[0], board)
-  game_play(players[1], board)
+  while game_on
+    start(players[0], board, 'X', cells)
+    logic = Logic.new(cells)
+    draw = Draw.new(cells)
 
-  count += 1
+    if logic.winner?('X')
+      board.call
+      puts ''
+      puts "#{players[0]} wins the game!"
+      sleep 2
+      game_on = false
+      return
+    elsif draw.draw?
+      board.call
+      puts ''
+      puts 'It\'s a Tie!'
+      puts ''
+      puts 'Game Over'
+      sleep 2
+      game_on = false
+      return
+    end
+
+    start(players[1], board, 'O', cells)
+    logic = Logic.new(cells)
+    draw = Draw.new(cells)
+
+    if logic.winner?('O')
+      board.call
+      puts ''
+      puts "#{players[1]} wins the game!"
+      sleep 2
+      game_on = false
+      return
+    elsif draw.draw?
+      board.call
+      puts ''
+      puts 'It\'s a Tie!'
+      puts ''
+      puts 'Game Over'
+      sleep 2
+      game_on = false
+      return
+    end
+  end
 end
 
-board.call
-puts "#{players[0]} wins the game."
-puts ''
-sleep 2
-system 'cls'
-system 'clear'
-
-count = 0
-while game_on && count < 2
-  game_play(players[0], board)
-  game_play(players[1], board)
-
-  count += 1
-end
-
-board.call
-puts 'It\'s a Tie.'
-puts ''
-puts 'Game over'
-sleep 2
-system 'cls'
-system 'clear'
-
+game_play(players, board, cells)
 # rubocop:enable Metrics/MethodLength
